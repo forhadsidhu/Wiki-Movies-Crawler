@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import  pandas as pd
+from  .rating_extractor import extract_rating
 
 @api_view(['GET'])
 def movie_detail(request, pk):
@@ -27,6 +28,24 @@ def movie_detail(request, pk):
         final_data={}
         for col in range(0,len(result_cols)):
             final_data.update({result_cols[col]:dict_data[pk][result_cols[col]]})
+
+
+        """
+        PHASE-4
+        Rating info
+        """
+        rating_title = final_data['Title']
+        rating_year =  final_data['Year']
+
+        query_title = rating_title+' '+'('+str(rating_year)+')'
+        print(query_title)
+
+        no_of_people,avg_rating=extract_rating(query_title)
+        final_data.update({'Rating Givers':no_of_people,
+                           'Avg Rating':avg_rating,
+
+        })
+
 
         return Response(final_data)
 
