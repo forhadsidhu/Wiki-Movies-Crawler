@@ -81,3 +81,28 @@ if __name__ == '__main__':
     # use concurrency for fast execution
     with concurrent.futures.ThreadPoolExecutor() as executor:
         executor.map(movie_desc_extract, movie_urls)
+
+    """
+       PHASE-2
+       Creating  file based db by saving data in csv
+       """
+
+    for col in range(0, len(movie_urls)):
+        if movie_urls[col] not in db_rows:
+            continue
+        temp_dict = {}
+        temp_dict.update({'Title': movie_titles[col],
+                          'Year': movie_years[col],
+                          'Award': movie_awards[col],
+                          'Nomination': movie_nominations[col],
+                          })
+
+        for rest_col in db_cols:
+            if rest_col not in db_rows[movie_urls[col]]:
+                temp_dict.update({rest_col: None})
+            else:
+                temp_dict.update({rest_col: db_rows[movie_urls[col]][rest_col]})
+        db.append(temp_dict)
+
+    df = pd.DataFrame(db)
+    df.to_csv('./data/movie_dataset.csv', encoding='utf-8')
