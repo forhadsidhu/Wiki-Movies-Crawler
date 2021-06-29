@@ -1,8 +1,8 @@
 
 # Wiki Movies Crawler
-Tthis project is based on BeautifulSoup
+This project is based on BeautifulSoup
 [BeautifulSoup](https://pypi.org/project/beautifulsoup4/),Pandas which crawl the data from [Wikipedia Movies List](https://en.wikipedia.org/wiki/List_of_Academy_Award-winning_films)
-ans gives data as API response
+and gives data as API response
 Currently this system take ~1 min to crawl whole movies data.
 
 
