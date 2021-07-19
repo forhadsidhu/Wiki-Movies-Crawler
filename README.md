@@ -9,7 +9,7 @@ Currently this system take ~1 min to crawl whole movies data.
 ## Table of Contents
 - [Background](#Background)
 - [Installation](#installation)
-- [Uses](#use)
+- [Usage](#use)
 
 
 
@@ -24,7 +24,7 @@ Wikipedia is a great source of data. this project is like pipeline for data prep
 
 
 
-## Uses
+## Usage
 
 For Parsing 
 <pre> python application.py -i parse </pre>
