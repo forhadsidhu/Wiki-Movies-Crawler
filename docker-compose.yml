@@ -5,9 +5,11 @@ services:
   web:
     build: ""
     command: >
-      sh -c "python /code/movie_api/manage.py producer &&
-      python /code/movie_api/manage.py consumer &&
-      python manage.py runserver 0.0.0.0:8000"
+      sh -c "python /code/movie_api/manage.py makemigrations &&
+      python /code/movie_api/manage.py migrate &&
+      python /code/movie_api/manage.py super_user &&
+      python /code/movie_api/manage.py producer &&
+      python /code/movie_api/manage.py runserver 0.0.0.0:8000"
 
     env_file:
       - web-variables.env

@@ -4,6 +4,9 @@ import time
 import requests
 from bs4 import BeautifulSoup
 from django.core.management import BaseCommand
+import sys
+sys.path.append(".")
+from movie_app.models import Movies
 import os
 
 
@@ -15,7 +18,7 @@ def movies_list_extract(url):
     rows = table_body.find_all('tr')
 
     print("Creating Queue -")
-
+    print(rows)
     # read rabbitmq connection url from environment variable
     # amqp_url = os.environ['AMQP_URL']
     url_params = pika.URLParameters('amqp://rabbit_mq?connection_attempts=10&retry_delay=10')
@@ -62,6 +65,18 @@ def movies_list_extract(url):
                    str(movie_nomination)
 
             print("Info printing- [%s]", info)
+
+            s = Movies.objects.create(
+                movie_title=str(movie_title),
+                movie_link=str(movie_link),
+                movie_year=str(movie_year),
+                movie_nomination=str(movie_nomination)
+
+            )
+            print(s)
+            s.save()
+            break
+
             channel.basic_publish(exchange='', routing_key='pages', body=info)
             print("Done=-=====================")
 
